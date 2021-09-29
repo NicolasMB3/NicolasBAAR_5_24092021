@@ -7,7 +7,7 @@
 
 <p align="center">
   <a href="https://nicolasmb3.github.io/NicolasBAAR_5_24092021/">
-    <img src="front/images/logo.png" alt="Logo">
+    <img src="front/images/logo-github.png" alt="Logo">
   </a>
 
   <p align="center">
