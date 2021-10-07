@@ -2,6 +2,7 @@ let itemSelect = JSON.parse(localStorage.getItem("products"));
 
 function displayCart() {
    let cartItems = document.querySelector("#cart__items");
+   // Tableau pour arriver tous les éléments du localStorage
    for (let produit in itemSelect) { 
       cartItems.innerHTML += 
       `  <article class="cart__item" data-id="${itemSelect[produit]._id}">
@@ -26,14 +27,6 @@ function displayCart() {
             </div>
          </article>`
    }
-   // console.log(itemSelect);
-   // if (!itemSelect) {
-   //    totalArticle.innerHTML = '0 ';
-   //    totalPrice.innerHTML = '0 ';
-   // } else {
-   //    totalArticle.innerHTML = itemSelect.length + ' ';
-   //    totalPrice.innerHTML = itemSelect.length;
-   // }
 }
 
 function countTotalInCart() {
