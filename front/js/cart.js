@@ -2,7 +2,7 @@ let itemSelect = JSON.parse(localStorage.getItem("products"));
 
 function displayCart() {
    let cartItems = document.querySelector("#cart__items");
-   // Tableau pour arriver tous les éléments
+   // Tableau pour mettre tous les éléments du localStorage
    for (let produit in itemSelect) { 
       cartItems.innerHTML += 
       `  <article class="cart__item" data-id="${itemSelect[produit]._id}">
@@ -48,7 +48,7 @@ function countTotalInCart() {
       // Transformer en nombre chaque valeur du tableau
       arrayPrice = arrayPrice.map((x) => parseFloat(x));
     
-      // Additionner les valeurs du tableau pour avoir le prix total
+      // Additionner les valeurs du tableau pour avoir la somme total
       const reducer = (acc, currentVal) => acc + currentVal;
       arrayPrice = arrayPrice.reduce(reducer);
 
