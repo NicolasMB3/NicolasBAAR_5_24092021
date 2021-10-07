@@ -2,7 +2,7 @@ let itemSelect = JSON.parse(localStorage.getItem("products"));
 
 function displayCart() {
    let cartItems = document.querySelector("#cart__items");
-   // Tableau pour arriver tous les éléments du localStorage
+   // Tableau pour arriver tous les éléments
    for (let produit in itemSelect) { 
       cartItems.innerHTML += 
       `  <article class="cart__item" data-id="${itemSelect[produit]._id}">
@@ -34,26 +34,31 @@ function countTotalInCart() {
    let totalArticle = document.getElementById('totalPrice');
    let totalPrice = document.querySelectorAll(".totalPriceItem");
    let totalProduct = document.getElementById("totalQuantity");
+ 
+   if (itemSelect !== null) {
+      for (let price in totalPrice) {
+         arrayPrice.push(totalPrice[price].innerHTML);
+      }
+    
+      // On enlève les undefined du tableau
+      arrayPrice = arrayPrice.filter((el) => {
+        return el != undefined;
+      });
+    
+      // Transformer en nombre chaque valeur du tableau
+      arrayPrice = arrayPrice.map((x) => parseFloat(x));
+    
+      // Additionner les valeurs du tableau pour avoir le prix total
+      const reducer = (acc, currentVal) => acc + currentVal;
+      arrayPrice = arrayPrice.reduce(reducer);
 
-   for (let price in totalPrice) {
-      arrayPrice.push(totalPrice[price].innerHTML);
+      // Affichage du prix
+      totalArticle.innerText = arrayPrice;
+      totalProduct.innerText = itemSelect.length + ' ';
+   } else { 
+      totalArticle.innerText = "0 ";
+      totalProduct.innerText = "0 ";
    }
- 
-   // On enlève les undefined du tableau
-   arrayPrice = arrayPrice.filter((el) => {
-     return el != undefined;
-   });
- 
-   // Transformer en nombre chaque valeur du tableau
-   arrayPrice = arrayPrice.map((x) => parseFloat(x));
- 
-   // Additionner les valeurs du tableau pour avoir le prix total
-   const reducer = (acc, currentVal) => acc + currentVal;
-   arrayPrice = arrayPrice.reduce(reducer);
- 
-   // Affichage du prix
-   totalArticle.innerText = arrayPrice;
-   totalProduct.innerText = itemSelect.length + ' ';
  }
 
 displayCart();
