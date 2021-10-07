@@ -43,19 +43,30 @@ function addPanier () {
             name: itemTitle.innerHTML,
             price: parseFloat(itemPrice.innerHTML),
             quantity: parseFloat(valueInput.value),
+            img: article.imageUrl,
+            color: valueSelect.options[valueSelect.selectedIndex].innerHTML,
             _id: id,
          };
          let listProduct = [];
          if (localStorage.getItem("products") !== null) {
             listProduct = JSON.parse(localStorage.getItem("products"));
          } 
-         listProduct.push(productAdded);
+         let match = listProduct.find(function(item) {
+            return item['_id'] === id;
+         });
+         let matchcolor = listProduct.find(function(item) {
+            return item['color'] === valueSelect.options[valueSelect.selectedIndex].innerHTML;
+         });
+         if (match && matchcolor) {
+            matchcolor['quantity'] += parseFloat(valueInput.value);
+         } else {
+            listProduct.push(productAdded);
+         } 
          localStorage.setItem("products", JSON.stringify(listProduct));
-         document.querySelector(".item__content__settings").innerHTML += '<p id="description" style="text-align: center; color: #214a75;">L\'oject a été ajouté au panier. Retour au menu</p>';
+         document.querySelector(".item__content__settings").innerHTML += '<p id="description" style="text-align: center; color: #214a75;">L\'objet a été ajouté au panier. Retour au menu ...</p>';
          setTimeout("location.reload(true);", 3000);
-         console.log('Ça marche');
       } else {
-         document.querySelector(".item__content__settings").innerHTML += '<p id="description" style="text-align: center; color: #eb5e34;">Erreur : Merci de mettre des valeurs acceptées. Retour au menu</p>';
+         document.querySelector(".item__content__settings").innerHTML += '<p id="description" style="text-align: center; color: #eb5e34;">Erreur : Merci de mettre des valeurs acceptées. Retour au menu ...</p>';
          setTimeout("location.reload(true);", 3000);
       }
    });

@@ -4,14 +4,15 @@ function displayCart() {
    let cartItems = document.querySelector("#cart__items");
    for (let produit in itemSelect) { 
       cartItems.innerHTML += 
-      `  <article class="cart__item" data-id="${itemSelect[produit].id}">
+      `  <article class="cart__item" data-id="${itemSelect[produit]._id}">
             <div class="cart__item__img">
-               <img src="" alt="Photographie d'un canapé">
+               <img src="${itemSelect[produit].img}" alt="Photographie d'un canapé">
             </div>
             <div class="cart__item__content">
                <div class="cart__item__content__titlePrice">
                   <h2>${itemSelect[produit].name}</h2>
-                  <p>${itemSelect[produit].quantity * itemSelect[produit].price} €</p>
+                  <p>${itemSelect[produit].color}</p>
+                  <p class="totalPriceItem">${itemSelect[produit].price * itemSelect[produit].quantity} €</p>
                </div>
                <div class="cart__item__content__settings">
                   <div class="cart__item__content__settings__quantity">
@@ -25,6 +26,42 @@ function displayCart() {
             </div>
          </article>`
    }
+   // console.log(itemSelect);
+   // if (!itemSelect) {
+   //    totalArticle.innerHTML = '0 ';
+   //    totalPrice.innerHTML = '0 ';
+   // } else {
+   //    totalArticle.innerHTML = itemSelect.length + ' ';
+   //    totalPrice.innerHTML = itemSelect.length;
+   // }
 }
 
+function countTotalInCart() {
+   let arrayPrice = [];
+   let totalArticle = document.getElementById('totalPrice');
+   let totalPrice = document.querySelectorAll(".totalPriceItem");
+   let totalProduct = document.getElementById("totalQuantity");
+
+   for (let price in totalPrice) {
+      arrayPrice.push(totalPrice[price].innerHTML);
+   }
+ 
+   // On enlève les undefined du tableau
+   arrayPrice = arrayPrice.filter((el) => {
+     return el != undefined;
+   });
+ 
+   // Transformer en nombre chaque valeur du tableau
+   arrayPrice = arrayPrice.map((x) => parseFloat(x));
+ 
+   // Additionner les valeurs du tableau pour avoir le prix total
+   const reducer = (acc, currentVal) => acc + currentVal;
+   arrayPrice = arrayPrice.reduce(reducer);
+ 
+   // Affichage du prix
+   totalArticle.innerText = arrayPrice;
+   totalProduct.innerText = itemSelect.length + ' ';
+ }
+
 displayCart();
+countTotalInCart();
