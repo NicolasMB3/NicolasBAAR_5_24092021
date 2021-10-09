@@ -13,7 +13,7 @@ const fetchSofas = async() => {
 const showSofas = async() => {
    await fetchSofas();
    results.innerHTML = (
-      sofas.filter(sofa => sofa.name.toLowerCase()).map(sofa => (
+      sofas.map(sofa => (
          `<a href="./product.html?id=${sofa._id}">
             <article>
               <img src="${sofa.imageUrl}" alt="${sofa.altTxt}">

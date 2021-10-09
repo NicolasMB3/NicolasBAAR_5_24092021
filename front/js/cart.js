@@ -5,27 +5,27 @@ function displayCart() {
    // Tableau pour mettre tous les éléments du localStorage
    for (let produit in itemSelect) { 
       cartItems.innerHTML += 
-      `  <article class="cart__item" data-id="${itemSelect[produit]._id}">
-            <div class="cart__item__img">
-               <img src="${itemSelect[produit].img}" alt="Photographie d'un canapé">
+      `<article class="cart__item" data-id="${itemSelect[produit]._id}">
+         <div class="cart__item__img">
+            <img src="${itemSelect[produit].img}" alt="Photographie d'un canapé">
+         </div>
+         <div class="cart__item__content">
+            <div class="cart__item__content__titlePrice">
+               <h2>${itemSelect[produit].name}</h2>
+               <p class="totalPriceItem">${itemSelect[produit].price * itemSelect[produit].quantity} €</p>
             </div>
-            <div class="cart__item__content">
-               <div class="cart__item__content__titlePrice">
-                  <h2>${itemSelect[produit].name}</h2>
-                  <p class="totalPriceItem">${itemSelect[produit].price * itemSelect[produit].quantity} €</p>
+            <div class="cart__item__content__settings">
+               <div class="cart__item__content__settings__quantity">
+                  <p>Qté : </p>
+                  <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${itemSelect[produit].quantity}">
                </div>
-               <div class="cart__item__content__settings">
-                  <div class="cart__item__content__settings__quantity">
-                     <p>Qté : </p>
-                     <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${itemSelect[produit].quantity}">
-                  </div>
-                  <div class="cart__item__content__settings__delete">
-                     <p class="deleteItem ${itemSelect[produit]._id}">Supprimer</p>
-                  </div>
+               <div class="cart__item__content__settings__delete">
+                  <button class="deleteItem">Supprimer</button>
                </div>
             </div>
-         </article>`
-   }
+         </div>
+      </article>`
+   } 
 }
 
 function countTotalInCart() {
@@ -33,8 +33,9 @@ function countTotalInCart() {
    let totalArticle = document.getElementById('totalPrice');
    let totalPrice = document.querySelectorAll(".totalPriceItem");
    let totalProduct = document.getElementById("totalQuantity");
+   let arrayCount = JSON.parse(localStorage.getItem("products"));
  
-   if (itemSelect !== null) {
+   if (arrayCount !== null && arrayPrice !== null) {
       for (let price in totalPrice) {
          arrayPrice.push(totalPrice[price].innerHTML);
       }
@@ -49,7 +50,7 @@ function countTotalInCart() {
       arrayPrice = arrayPrice.reduce(reducer);
       // Affichage du prix
       totalArticle.innerText = arrayPrice;
-      totalProduct.innerText = itemSelect.length + ' ';
+      totalProduct.innerText = arrayCount.length + ' ';
    } else { 
       // Si pas de valeur alors on affiche 0
       totalArticle.innerText = "0 ";
@@ -57,5 +58,58 @@ function countTotalInCart() {
    }
 }
 
+function checkItem(productname) {
+   let itemSelect = JSON.parse(localStorage.getItem("products"));
+   let array = [true, 0];
+   for (i = 0; i < itemSelect.length; i++) {
+      if(productname == itemSelect[i].name) {
+         array[1] = i;
+         return array;
+      }
+   }
+}
+
+function countItem() {
+   let buttonSupp = document.querySelectorAll('input.itemQuantity');
+   buttonSupp.forEach(function(e) {
+      e.addEventListener('change', function(x) {
+         var test = e.parentNode.parentNode.parentNode.parentNode;
+         var productCount = x.target.value
+         var test2 = test.querySelector("div.cart__item__content__titlePrice > h2").innerText;
+         if(checkItem(test2)) {
+            var arrayTest = JSON.parse(localStorage.getItem("products"));
+            arrayTest[checkItem(test2)[1]].quantity = parseInt(productCount);
+            localStorage.setItem("products", JSON.stringify(arrayTest));
+            countTotalInCart();
+         } else {
+            console.log("coucou")
+         }
+      })
+   })
+}
+
+function removeItem() {
+   let buttonSupp = document.querySelectorAll('button.deleteItem');
+   buttonSupp.forEach(function(e) {
+      e.addEventListener('click', function() {
+         var test = e.parentNode.parentNode.parentNode.parentNode;
+         var test2 = test.querySelector("div.cart__item__content__titlePrice > h2").innerText;
+         if(checkItem(test2)) {
+            var arrayTest = JSON.parse(localStorage.getItem("products"));
+            arrayTest.splice(checkItem(test2)[1], 1);
+            localStorage.setItem("products", JSON.stringify(arrayTest));
+            location.reload();
+            setTimeout(function(){
+               displayCart();
+            }, 600)
+            countTotalInCart();
+         }
+         arrayTest = [];
+      })
+   })
+}
+
 displayCart();
 countTotalInCart();
+removeItem();
+countItem();

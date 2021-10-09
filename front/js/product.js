@@ -39,11 +39,11 @@ function addPanier () {
       if (valueInput.value > 0 && valueInput.value < 100 && valueSelect.value != '') {
          // Créer localStorage
          let productAdded = {
-            name: itemTitle.innerHTML,
+            name: itemTitle.innerHTML + " " +valueSelect.options[valueSelect.selectedIndex].innerHTML,
+            color: valueSelect.options[valueSelect.selectedIndex].innerHTML,
             price: parseFloat(itemPrice.innerHTML),
             quantity: parseFloat(valueInput.value),
             img: article.imageUrl,
-            color: valueSelect.options[valueSelect.selectedIndex].innerHTML,
             _id: id,
          };
          let listProduct = [];
@@ -53,8 +53,11 @@ function addPanier () {
          let match = listProduct.find(function(item) {
             return item['_id'] === id;
          });
-         if (match) {
-            match['quantity'] += parseFloat(valueInput.value);
+         let matchColors = listProduct.find(function(item) {
+            return item['color'] === valueSelect.options[valueSelect.selectedIndex].innerHTML;
+         });
+         if (match && matchColors) {
+            matchColors['quantity'] += parseFloat(valueInput.value);
          } else {
             listProduct.push(productAdded);
          } 
