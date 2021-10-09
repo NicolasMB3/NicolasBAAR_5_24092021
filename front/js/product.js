@@ -1,7 +1,6 @@
 let params = new URL(document.location).searchParams;
 let id = params.get("id");
 let url = 'http://localhost:3000/api/products/' + id;
-let clicked = false;
 const numberSelect = document.getElementById('quantity');
 const itemImg = document.querySelector(".item__img");
 const itemTitle = document.getElementById("title");
@@ -54,11 +53,8 @@ function addPanier () {
          let match = listProduct.find(function(item) {
             return item['_id'] === id;
          });
-         let matchcolor = listProduct.find(function(item) {
-            return item['color'] === valueSelect.options[valueSelect.selectedIndex].innerHTML;
-         });
-         if (match && matchcolor) {
-            matchcolor['quantity'] += parseFloat(valueInput.value);
+         if (match) {
+            match['quantity'] += parseFloat(valueInput.value);
          } else {
             listProduct.push(productAdded);
          } 

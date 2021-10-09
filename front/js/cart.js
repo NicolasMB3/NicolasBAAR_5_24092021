@@ -12,7 +12,6 @@ function displayCart() {
             <div class="cart__item__content">
                <div class="cart__item__content__titlePrice">
                   <h2>${itemSelect[produit].name}</h2>
-                  <p>${itemSelect[produit].color}</p>
                   <p class="totalPriceItem">${itemSelect[produit].price * itemSelect[produit].quantity} €</p>
                </div>
                <div class="cart__item__content__settings">
@@ -21,7 +20,7 @@ function displayCart() {
                      <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${itemSelect[produit].quantity}">
                   </div>
                   <div class="cart__item__content__settings__delete">
-                     <p class="deleteItem">Supprimer</p>
+                     <p class="deleteItem ${itemSelect[produit]._id}">Supprimer</p>
                   </div>
                </div>
             </div>
@@ -39,27 +38,24 @@ function countTotalInCart() {
       for (let price in totalPrice) {
          arrayPrice.push(totalPrice[price].innerHTML);
       }
-    
       // On enlève les undefined du tableau
       arrayPrice = arrayPrice.filter((el) => {
         return el != undefined;
       });
-    
       // Transformer en nombre chaque valeur du tableau
       arrayPrice = arrayPrice.map((x) => parseFloat(x));
-    
       // Additionner les valeurs du tableau pour avoir la somme total
       const reducer = (acc, currentVal) => acc + currentVal;
       arrayPrice = arrayPrice.reduce(reducer);
-
       // Affichage du prix
       totalArticle.innerText = arrayPrice;
       totalProduct.innerText = itemSelect.length + ' ';
    } else { 
+      // Si pas de valeur alors on affiche 0
       totalArticle.innerText = "0 ";
       totalProduct.innerText = "0 ";
    }
- }
+}
 
 displayCart();
 countTotalInCart();
