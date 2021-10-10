@@ -1,3 +1,8 @@
+displayCart();
+removeItem();
+countItem();
+countTotalInCart();
+
 function displayCart() {
    let itemSelect = JSON.parse(localStorage.getItem("products"));
    let cartItems = document.querySelector("#cart__items");
@@ -73,8 +78,9 @@ function countItem() {
    let buttonSupp = document.querySelectorAll('input.itemQuantity');
    let arrayTest = JSON.parse(localStorage.getItem("products"));
    buttonSupp.forEach(function(e) {
-      e.addEventListener('change', function(x) {
-         var test = e.parentNode.parentNode.parentNode.parentNode;
+      e.addEventListener('input', function(x) {
+         // return -> article.cart__item
+         var test = e.closest(".cart__item");
          // On vient récupérer la valeur de l'input quantity
          var productCount = x.target.value
          var test2 = test.querySelector("div.cart__item__content__titlePrice > h2").innerText;
@@ -82,8 +88,14 @@ function countItem() {
             // On remplace le localStorage si le test est bon
             arrayTest[checkItem(test2)[1]].quantity = parseInt(productCount);
             localStorage.setItem("products", JSON.stringify(arrayTest));
-            // Rechargement de la page (innerHTML qui cause le problème ???)
-            location.reload();
+            var x, i;
+            x = document.querySelectorAll(".cart__item");
+            for (i = 0; i < x.length; i++) {
+               x[i].remove();
+            }
+            displayCart();
+            countItem();
+            removeItem()
          } else {
             // Ajout d'un message d'erreur avec le DOM pour prévenir l'utilisateur de la valeur incorrect
             let tag = document.createElement("p");
@@ -102,24 +114,18 @@ function removeItem() {
    let buttonSupp = document.querySelectorAll('button.button__del');
    buttonSupp.forEach(function(e) {
       e.addEventListener('click', function() {
-         var test = e.parentNode.parentNode.parentNode.parentNode;
+         var test = e.closest(".cart__item");
          var test2 = test.querySelector("div.cart__item__content__titlePrice > h2").innerText;
          if(checkItem(test2)) {
             var arrayTest = JSON.parse(localStorage.getItem("products"));
             arrayTest.splice(checkItem(test2)[1], 1);
             localStorage.setItem("products", JSON.stringify(arrayTest));
-            location.reload();
-            setTimeout(function(){
-               displayCart();
-            }, 600)
-            countTotalInCart();
+            test.remove();
          }
-         arrayTest = [];
+         let itemSelect = JSON.parse(localStorage.getItem("products"));
+         if (itemSelect.length == 0) {
+            localStorage.clear('products');
+         }
       })
    })
 }
-
-displayCart();
-removeItem();
-countItem();
-countTotalInCart();
