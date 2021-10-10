@@ -150,6 +150,11 @@ h2 {
 	cursor: pointer;
 }
 
+.alertNumber {
+	color: rgb(165, 22, 22);
+	font-weight: bold;
+}
+
 /***************/
 /*Media queries*/
 /***************/

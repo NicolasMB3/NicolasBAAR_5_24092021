@@ -37,7 +37,7 @@ function addPanier () {
    const addButton = document.querySelector("#addToCart");
    addButton.addEventListener('click', () => {
       if (valueInput.value > 0 && valueInput.value < 100 && valueSelect.value != '') {
-         // Créer localStorage
+         // Création des valeurs localStorage
          let productAdded = {
             name: itemTitle.innerHTML + " " +valueSelect.options[valueSelect.selectedIndex].innerHTML,
             color: valueSelect.options[valueSelect.selectedIndex].innerHTML,
@@ -56,11 +56,13 @@ function addPanier () {
          let matchColors = listProduct.find(function(item) {
             return item['color'] === valueSelect.options[valueSelect.selectedIndex].innerHTML;
          });
+         // Si doublons, ajouter la valeur à l'id et couleur déjà existante
          if (match && matchColors) {
             matchColors['quantity'] += parseFloat(valueInput.value);
          } else {
             listProduct.push(productAdded);
          } 
+         // Création du localStorage product (une seule valeur pour tous les produits)
          localStorage.setItem("products", JSON.stringify(listProduct));
          document.querySelector(".item__content__settings").innerHTML += '<p id="description" style="text-align: center; color: #214a75;">L\'objet a été ajouté au panier. Retour au menu ...</p>';
          setTimeout("location.reload(true);", 3000);

@@ -57,6 +57,7 @@ function countTotalInCart() {
    }
 }
 
+// Vérification du localStorage si correspondance
 function checkItem(productname) {
    let itemSelect = JSON.parse(localStorage.getItem("products"));
    let array = [true, 0];
@@ -70,17 +71,28 @@ function checkItem(productname) {
 
 function countItem() {
    let buttonSupp = document.querySelectorAll('input.itemQuantity');
+   let arrayTest = JSON.parse(localStorage.getItem("products"));
    buttonSupp.forEach(function(e) {
       e.addEventListener('change', function(x) {
          var test = e.parentNode.parentNode.parentNode.parentNode;
+         // On vient récupérer la valeur de l'input quantity
          var productCount = x.target.value
          var test2 = test.querySelector("div.cart__item__content__titlePrice > h2").innerText;
-         if(checkItem(test2)) {
-            var arrayTest = JSON.parse(localStorage.getItem("products"));
+         if(checkItem(test2) && productCount > 0 && productCount <= 100) {
+            // On remplace le localStorage si le test est bon
             arrayTest[checkItem(test2)[1]].quantity = parseInt(productCount);
             localStorage.setItem("products", JSON.stringify(arrayTest));
+            // Rechargement de la page (innerHTML qui cause le problème ???)
             location.reload();
-            countTotalInCart();
+         } else {
+            // Ajout d'un message d'erreur avec le DOM pour prévenir l'utilisateur de la valeur incorrect
+            let tag = document.createElement("p");
+            tag.className = 'alertNumber'
+            tag.style.textAlign = 'center';
+            let text = document.createTextNode("Merci de mettre une valeur entre 1 et 100 compris");
+            tag.appendChild(text);
+            let element = document.getElementById("alert");
+            element.appendChild(tag);
          }
       })
    })
@@ -108,6 +120,6 @@ function removeItem() {
 }
 
 displayCart();
-countTotalInCart();
 removeItem();
 countItem();
+countTotalInCart();
