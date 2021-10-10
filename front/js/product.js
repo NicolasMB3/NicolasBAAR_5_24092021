@@ -29,7 +29,9 @@ const fetchProduct = async() => {
             select.appendChild(opt);
          }
       })
-      .catch(err => console.log('Erreur : ' + err));
+      .catch(function(error) {
+         console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
+      });
 }
 
 // Ajout au panier avec le localStorage
@@ -39,7 +41,7 @@ function addPanier () {
       if (valueInput.value > 0 && valueInput.value < 100 && valueSelect.value != '') {
          // Création des valeurs localStorage
          let productAdded = {
-            name: itemTitle.innerHTML + " " +valueSelect.options[valueSelect.selectedIndex].innerHTML,
+            name: itemTitle.innerHTML + " " + valueSelect.options[valueSelect.selectedIndex].innerHTML,
             color: valueSelect.options[valueSelect.selectedIndex].innerHTML,
             price: parseFloat(itemPrice.innerHTML),
             quantity: parseFloat(valueInput.value),
@@ -65,10 +67,10 @@ function addPanier () {
          // Création du localStorage product (une seule valeur pour tous les produits)
          localStorage.setItem("products", JSON.stringify(listProduct));
          document.querySelector(".item__content__settings").innerHTML += '<p id="description" style="text-align: center; color: #214a75;">L\'objet a été ajouté au panier. Retour au menu ...</p>';
-         setTimeout("location.reload(true);", 3000);
+         setTimeout("location.reload(true);", 1000);
       } else {
          document.querySelector(".item__content__settings").innerHTML += '<p id="description" style="text-align: center; color: #eb5e34;">Erreur : Merci de mettre des valeurs acceptées. Retour au menu ...</p>';
-         setTimeout("location.reload(true);", 3000);
+         setTimeout("location.reload(true);", 1000);
       }
    });
 }
