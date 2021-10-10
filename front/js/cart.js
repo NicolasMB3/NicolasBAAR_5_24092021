@@ -1,6 +1,5 @@
-let itemSelect = JSON.parse(localStorage.getItem("products"));
-
 function displayCart() {
+   let itemSelect = JSON.parse(localStorage.getItem("products"));
    let cartItems = document.querySelector("#cart__items");
    // Tableau pour mettre tous les éléments du localStorage
    for (let produit in itemSelect) { 
@@ -20,7 +19,7 @@ function displayCart() {
                   <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${itemSelect[produit].quantity}">
                </div>
                <div class="cart__item__content__settings__delete">
-                  <button class="deleteItem">Supprimer</button>
+                  <button class="button__del">Supprimer</button>
                </div>
             </div>
          </div>
@@ -35,7 +34,7 @@ function countTotalInCart() {
    let totalProduct = document.getElementById("totalQuantity");
    let arrayCount = JSON.parse(localStorage.getItem("products"));
  
-   if (arrayCount !== null && arrayPrice !== null) {
+   if (arrayCount !== null && arrayCount.length != 0) {
       for (let price in totalPrice) {
          arrayPrice.push(totalPrice[price].innerHTML);
       }
@@ -80,16 +79,15 @@ function countItem() {
             var arrayTest = JSON.parse(localStorage.getItem("products"));
             arrayTest[checkItem(test2)[1]].quantity = parseInt(productCount);
             localStorage.setItem("products", JSON.stringify(arrayTest));
+            location.reload();
             countTotalInCart();
-         } else {
-            console.log("coucou")
          }
       })
    })
 }
 
 function removeItem() {
-   let buttonSupp = document.querySelectorAll('button.deleteItem');
+   let buttonSupp = document.querySelectorAll('button.button__del');
    buttonSupp.forEach(function(e) {
       e.addEventListener('click', function() {
          var test = e.parentNode.parentNode.parentNode.parentNode;
