@@ -129,3 +129,76 @@ function removeItem() {
       })
    })
 }
+
+function checkFormAndPostRequest() {
+   // On récupère les inputs depuis le DOM.
+   const submit = document.getElementById("order");
+   let inputFirstName = document.querySelector("#firstName");
+   let inputLastName = document.querySelector("#lastName");
+   let inputCity = document.querySelector("#city");
+   let inputAddress = document.querySelector("#address");
+   let inputMail = document.querySelector("#email");
+   let itemSelect = JSON.parse(localStorage.getItem("products"));
+   const regexEmail = /^\w+([.-]?\w+)@\w+([.-]?\w+)(.\w{2,3})+$/;
+   const regexAddress = /^[a-zA-Z0-9\s,.'-]{3,}$/;
+   const regexLetter = /^[a-zA-Z-]+$/;
+   // Lors d'un clic, si l'un des champs n'est pas rempli, on affiche une erreur, on empêche l'envoi du formulaire. On vérifie aussi que le numéro est un nombre, sinon même chose.
+   submit.addEventListener("click", (e) => {
+      if (!inputFirstName.value.match(regexLetter)) {
+         document.getElementById('firstNameErrorMsg').innerText = "Merci d'écrire un prénom valide";
+         e.preventDefault();
+      } else if (!inputLastName.value.match(regexLetter)) {
+         document.getElementById('lastNameErrorMsg').innerText = "Merci d'écrire un nom valide";
+         e.preventDefault();
+      } else if (!inputCity.value.match(regexLetter)) {
+         document.getElementById('cityErrorMsg').innerText = "Merci d'écrire votre pays correctement";
+         e.preventDefault();
+      } else if (!inputAddress.value.match(regexAddress)) {
+         document.getElementById('addressErrorMsg').innerText = "Merci d'écrire une adresse valide";
+         e.preventDefault();
+      } else if (!inputMail.value.match(regexEmail)) {
+         document.getElementById('emailErrorMsg').innerText = "Merci d'écrire un email valide";
+         e.preventDefault();
+      } else {
+         // Si le formulaire est valide on créer un nouveau localStorage
+         var product = [];
+         for (i = 0; i < itemSelect.length; i++) {
+            product[i] = itemSelect[i]._id;
+         }
+      
+         const order = {
+            contact: {
+               firstName: inputFirstName.value,
+               lastName: inputLastName.value,
+               address: inputAddress.value,
+               city: inputCity.value,
+               email: inputMail.value,
+            },
+            products: product,
+         };
+      
+         // Création de l'entête de la requête
+         const options = {
+            method: 'POST',
+            body: JSON.stringify(order),
+            headers: { 
+               "Content-Type": "application/json" 
+            },
+         };
+      
+         // Envoie de la requête
+         fetch("http://localhost:3000/api/products/order", options)
+         .then(res => res.json())
+         .then((data) => {
+            localStorage.clear();
+            localStorage.setItem("orderId", data.orderId);
+            document.location = 'confirmation.html';
+         })
+         .catch(function(error) {
+            console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
+         });
+      }
+   });
+}
+
+checkFormAndPostRequest();
