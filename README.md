@@ -24,7 +24,7 @@
 Le site Kanap est un projet produit par Nicolas pour la formation de développeur web à OpenClassrooms.
 
 Contenance du site :
-* Création du page dynamique pour afficher les produits,
+* Création de pages dynamiques pour afficher les produits,
 * Utilisation de Javascript et Node.js,
 * Mise en place d'un panier pour les produits et gestion de la commande.
 
