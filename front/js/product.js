@@ -9,6 +9,7 @@ const itemDesc = document.getElementById("description");
 const valueInput = document.getElementById("quantity");
 const valueSelect = document.getElementById("colors");
 
+// Récupération des donnés back-end pour les articles
 const fetchProduct = async() => {
    product = await fetch(url)
       .then(response => response.json())

@@ -1,7 +1,8 @@
+// Fonction qui affiche les articles du localStorage
 function displayCart() {
    let itemSelect = JSON.parse(localStorage.getItem("products"));
    let cartItems = document.querySelector("#cart__items");
-   // Tableau pour mettre tous les éléments du localStorage
+   // Boucle pour mettre tous les éléments du localStorage
    for (let produit in itemSelect) { 
       cartItems.innerHTML += 
       `<article class="cart__item" data-id="${itemSelect[produit]._id}">
@@ -27,6 +28,7 @@ function displayCart() {
    } 
 }
 
+// Fonction qui affiche le total des articles et la somme (en €) des articles
 function countTotalInCart() {
    let arrayPrice = [];
    let totalArticle = document.getElementById('totalPrice');
@@ -69,6 +71,7 @@ function checkItem(productname) {
    }
 }
 
+// Fonction qui permet de modifier la quantité d'élément dans le tableau
 function countItem() {
    let buttonSupp = document.querySelectorAll('input.itemQuantity');
    let arrayTest = JSON.parse(localStorage.getItem("products"));
@@ -106,6 +109,7 @@ function countItem() {
    })
 }
 
+// Suppression d'un élément avec le boutton "Supprimer" dans le panier
 function removeItem() {
    let buttonSupp = document.querySelectorAll('button.button__del');
    buttonSupp.forEach(function(e) {
@@ -126,6 +130,7 @@ function removeItem() {
    })
 }
 
+// Vérification des input et récupération des informations back-end
 function checkFormAndPostRequest() {
    // On récupère les inputs depuis le DOM.
    const submit = document.getElementById("order");
@@ -196,7 +201,7 @@ function checkFormAndPostRequest() {
                console.log('Il y a eu un problème avec l\'opération fetch: ' + error.message);
             });
          } else {
-            console.log('Merci de mettre un article dans le panier');
+            alert('Merci de mettre des articles dans le panier');
          }
       }
    });

@@ -2,14 +2,14 @@ const results = document.getElementById('items');
 const url = 'http://localhost:3000/api/products';
 let sofas;
 
-// API REQUEST
+// Demande des informations à l'API
 const fetchSofas = async() => {
    sofas = await fetch(url)
       .then(res => res.json())
       .catch(err => console.log('Il y a eu un problème avec l\'opération fetch: ' + err.message));
 };
 
-// Fonction qui affiche les résultats du fetch
+// Const qui affiche les résultats du fetch sur la page index.html
 const showSofas = async() => {
    await fetchSofas();
    results.innerHTML = (
