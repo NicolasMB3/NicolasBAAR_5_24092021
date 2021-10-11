@@ -3,33 +3,29 @@ function displayCart() {
    let itemSelect = JSON.parse(localStorage.getItem("products"));
    let cartItems = document.querySelector("#cart__items");
    // Boucle pour mettre tous les éléments du localStorage
-   if (itemSelect != null) {
       for (let produit in itemSelect) { 
-         cartItems.innerHTML += 
-         `<article class="cart__item" data-id="${itemSelect[produit]._id}">
-            <div class="cart__item__img">
-               <img src="${itemSelect[produit].img}" alt="Photographie d'un canapé ${itemSelect[produit].color}">
+      cartItems.innerHTML += 
+      `<article class="cart__item" data-id="${itemSelect[produit]._id}">
+         <div class="cart__item__img">
+            <img src="${itemSelect[produit].img}" alt="Photographie d'un canapé ${itemSelect[produit].color}">
+         </div>
+         <div class="cart__item__content">
+            <div class="cart__item__content__titlePrice">
+               <h2>${itemSelect[produit].name}</h2>
+               <p class="totalPriceItem">${itemSelect[produit].price * itemSelect[produit].quantity} €</p>
             </div>
-            <div class="cart__item__content">
-               <div class="cart__item__content__titlePrice">
-                  <h2>${itemSelect[produit].name}</h2>
-                  <p class="totalPriceItem">${itemSelect[produit].price * itemSelect[produit].quantity} €</p>
+            <div class="cart__item__content__settings">
+               <div class="cart__item__content__settings__quantity">
+                  <p>Qté : </p>
+                  <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${itemSelect[produit].quantity}">
                </div>
-               <div class="cart__item__content__settings">
-                  <div class="cart__item__content__settings__quantity">
-                     <p>Qté : </p>
-                     <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${itemSelect[produit].quantity}">
-                  </div>
-                  <div class="cart__item__content__settings__delete">
-                     <button class="button__del">Supprimer</button>
-                  </div>
+               <div class="cart__item__content__settings__delete">
+                  <button class="button__del">Supprimer</button>
                </div>
             </div>
-         </article>`
-      } 
-   } else {
-      alert('Aucun article n\'a été trouvé');
-   }
+         </div>
+      </article>`
+   } 
 }
 
 // Fonction qui affiche le total des articles et la somme (en €) des articles

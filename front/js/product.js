@@ -68,7 +68,7 @@ function addPanier () {
          // Création du localStorage product (une seule valeur pour tous les produits)
          localStorage.setItem("products", JSON.stringify(listProduct));
          alert('Les articles ont bien été ajoutés');
-         setTimeout("location.reload(true);", 400);
+         document.location = 'cart.html';
       } else {
          alert('Merci de remplir toutes les informations demandées avant de continuer');
          setTimeout("location.reload(true);", 400);
