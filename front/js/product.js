@@ -67,11 +67,11 @@ function addPanier () {
          } 
          // Création du localStorage product (une seule valeur pour tous les produits)
          localStorage.setItem("products", JSON.stringify(listProduct));
-         document.querySelector(".item__content__settings").innerHTML += '<p id="description" style="text-align: center; color: #214a75;">L\'objet a été ajouté au panier. Retour au menu ...</p>';
-         setTimeout("location.reload(true);", 1000);
+         alert('Les articles ont bien été ajoutés');
+         setTimeout("location.reload(true);", 400);
       } else {
-         document.querySelector(".item__content__settings").innerHTML += '<p id="description" style="text-align: center; color: #eb5e34;">Erreur : Merci de mettre des valeurs acceptées. Retour au menu ...</p>';
-         setTimeout("location.reload(true);", 1000);
+         alert('Merci de remplir toutes les informations demandées avant de continuer');
+         setTimeout("location.reload(true);", 400);
       }
    });
 }
