@@ -6,7 +6,7 @@ let sofas;
 const fetchSofas = async() => {
    sofas = await fetch(url)
       .then(res => res.json())
-      .catch(err => console.log('Erreur : ' + err));
+      .catch(err => console.log('Il y a eu un problème avec l\'opération fetch: ' + err.message));
 };
 
 // Fonction qui affiche les résultats du fetch
