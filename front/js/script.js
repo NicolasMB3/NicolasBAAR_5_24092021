@@ -9,21 +9,21 @@ const fetchSofas = async() => {
       .catch(err => console.log('Il y a eu un problème avec l\'opération fetch: ' + err.message));
 };
 
-// Const qui affiche les résultats du fetch sur la page index.html
-const showSofas = async() => {
+// Fonction qui affiche les résultats du fetch sur la page index.html
+async function renderSofa() {
    await fetchSofas();
    results.innerHTML = (
       sofas.map(sofa => (
-         `<a href="./product.html?id=${sofa._id}">
+         `<a href='./product.html?id=${sofa._id}'>
             <article>
-              <img src="${sofa.imageUrl}" alt="${sofa.altTxt}">
-              <h3 class="productName">${sofa.name}</h3>
-              <p class="productDescription">${sofa.description}</p>
+              <img src='${sofa.imageUrl}' alt='${sofa.altTxt}'>
+              <h3 class='productName'>${sofa.name}</h3>
+              <p class='productDescription'>${sofa.description}</p>
             </article>
          </a>`
       )).join('')
    );
-};
+}
 
 // Appel de la fonction showSofas
-showSofas();
+renderSofa();
