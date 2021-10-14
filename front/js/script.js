@@ -10,7 +10,7 @@ const fetchSofas = async() => {
 };
 
 // Fonction qui affiche les résultats du fetch sur la page index.html
-async function renderSofa() {
+const renderSofa = async () => {
    await fetchSofas();
    results.innerHTML = (
       sofas.map(sofa => (
@@ -25,5 +25,5 @@ async function renderSofa() {
    );
 }
 
-// Appel de la fonction showSofas
+// Appel de la fonction renderSofa
 renderSofa();
