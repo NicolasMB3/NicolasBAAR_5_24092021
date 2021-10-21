@@ -39,7 +39,7 @@ const fetchProduct = async() => {
 function addPanier () {
    const addButton = document.querySelector('#addToCart');
    addButton.addEventListener('click', () => {
-      if (valueInput.value > 0 && valueInput.value < 100 && valueSelect.value != '') {
+      if (valueInput.value > 0 && valueInput.value <= 100 && valueSelect.value != '') {
          // Création des valeurs localStorage
          let productAdded = {
             name: itemTitle.innerHTML + ' ' + valueSelect.options[valueSelect.selectedIndex].innerHTML,
