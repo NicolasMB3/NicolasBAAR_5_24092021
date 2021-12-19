@@ -73,7 +73,7 @@ Une fois le serveur back-end et front-end allumés, une page devrait s'ouvrir au
 
 Nicolas BAAR - [@MeesN](https://nicolasbaar.fr/) - nicolasbaar@icloud.com
 
-Lien du projet : [https://github.com/NicolasMB3/NicolasBAAR_5_24092021](https://github.com/NicolasMB3NicolasBAAR_5_24092021)
+Lien du projet : [https://github.com/NicolasMB3/NicolasBAAR_5_24092021](https://github.com/NicolasMB3/NicolasBAAR_5_24092021)
 
 <p align="right">(<a href="#top">Revenir en haut de la page</a>)</p>
 
